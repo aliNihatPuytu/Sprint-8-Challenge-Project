@@ -1,20 +1,20 @@
 import { PIZZA_SIZES } from "./contants";
 
 export const calculateTotalPrice = (sizeId, toppings) => {
-    const selectedSize = PIZZA_SIZES.find(size => size.id === sizeId)
-    let total = selectedSize ? selectedSize.price : 0
+  const selectedSize = PIZZA_SIZES.find(size => size.id === sizeId)
+  let total = selectedSize ? selectedSize.price : 0
 
-    toppings.forEach(toppings => {
-        if (toppings.selected) {
-            total += topping.price
-        }
-    })
+  toppings.forEach(topping => {
+    if (topping.selected) {
+      total += topping.price
+    }
+  })
 
-    return total.toFixed(2)
+  return total.toFixed(2)
 }
 
 export const calculateToppingsPrice = (toppings) => {
-    return toppings
+  return toppings
     .filter(t => t.selected)
     .reduce((total, topping) => total + topping.price, 0)
     .toFixed(2)
