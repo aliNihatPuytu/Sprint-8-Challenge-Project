@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import workintech from '/workintech.svg'
-import './App.css'
+import { useState } from "react";
+import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import OrderForm from "./components/OrderForm/OrderForm";
+import Success from "./components/Success/Success";
+import Footer from "./components/Footer/Footer";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState("home");
+    const [orderData, setOrderData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-  return (
-    <>
-      <div>
-        <a href="https://github.com/Workintech/fsweb-s7-challenge-pizza" target="_blank">
-          <img src={workintech} className="logo" alt="Workintech logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Workintech + 🍕</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          Absolute Acı Pizza sayısı {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Workintech or Pizza logos to learn more
-      </p>
-    </>
-  )
+    const navigateTo = (page) => {
+        setCurrentPage(page);
+    }
+
+    const handleOrderSubmit = (data) => {
+    setOrderData(data);
+    setCurrentPage("success");
+    }
+
+    const renderPage = () => {
+        switch (currentPage) {
+            case "home":
+                return <Home navigateTo={navigateTo} />
+            case "order":
+                return <OrderForm
+                        navigateTo={navigateTo}
+                        onSubmit={handleOrderSubmit}
+                        setIsLoading={setIsLoading} 
+                />
+            case "success":
+                return <Success
+                        navigateTo={navigateTo}
+                        orderData={orderData}
+                        />
+            default:
+                return <Home navigateTo={navigateTo} />
+        }
+    }
+
+    return (
+        <div className="app">
+            <Header />
+            <main className="main-content">
+                {renderPage()}
+            </main>
+            <Footer />
+            {isLoading && (
+                <div className="loading-overlay">
+                    <div className="loading-spinner">Siparişiniz gönderiliyor...</div>
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default App
