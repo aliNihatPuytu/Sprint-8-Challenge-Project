@@ -1,80 +1,78 @@
 import React from "react";
+import "./Success.css";
 
 const Success = ({ navigateTo, orderData }) => {
   if (!orderData) {
     return (
-      <section className="success">
+      <div className="success-page">
         <div className="container">
-          <div className="success-content">
-            <h2>Sipariş Bilgisi Bulunamadı</h2>
+          <div className="error-content">
+            <h2 className="error-title">Sipariş Bilgisi Bulunamadı</h2>
             <button
-              className="back-btn"
+              className="back-home-btn"
               onClick={() => navigateTo("home")}
             >
               Ana Sayfaya Dön
             </button>
           </div>
         </div>
-      </section>
-    )
+      </div>
+    );
   }
 
   return (
-    <section className="success">
+    <div className="success-page">
       <div className="container">
         <div className="success-content">
-          <h2>TEBRİKLER!<br />SİPARİŞİNİZ ALINDI!</h2>
-
+          <div className="success-header">
+            <img src="/images/iteration-1-images/logo.svg" alt="Teknolojik Yemekler" className="success-logo" />
+            <p className="success-subtitle">lezzetin yolda</p>
+            <h1 className="success-title">
+              SİPARİŞ ALINDI
+            </h1>
+            <div className="success-divider"></div>
+          </div>
+          
           <div className="order-details">
-            <h3>{orderData.size} Boy Position Absolute Acı Pizza</h3>
-
-            <div className="detail-row">
-              <strong>Hamur:</strong> {orderData.crust}
-            </div>
-
-            <div className="detail-row">
-              <strong>Ek Malzemeler:</strong> {orderData.toppings.join(", ")}
-            </div>
+            <h2 className="order-item-name">{orderData.productName}</h2>
             
-            {orderData.note && (
-              <div className="detail-row">
-                <strong>Not:</strong> {orderData.note}
+            <div className="order-specs">
+              <div className="spec-item">
+                <span className="spec-label">Boyut:</span>
+                <span className="spec-value">{orderData.size}</span>
               </div>
-            )}
-
-            <div className="order-summary">
-              <div className="summary-line">
-                <span>Sipariş Toplamı</span>
+              <div className="spec-item">
+                <span className="spec-label">Hamur:</span>
+                <span className="spec-value">{orderData.crust}</span>
               </div>
-              <div className="summary-line">
-                <span>Seçimler</span>
-                <span>{(parseFloat(orderData.totalPrice) - 85.50).toFixed(2)} ₺</span>
+              <div className="spec-item">
+                <span className="spec-label">Ek Malzemeler:</span>
+                <span className="spec-value">{orderData.toppings.join(', ')}</span>
               </div>
-              <div className="summary-line total">
-                <span>Toplam</span>
-                <span>{orderData.totalPrice} ₺</span>
-              </div>
+              {orderData.note && (
+                <div className="spec-item">
+                  <span className="spec-label">Not:</span>
+                  <span className="spec-value">{orderData.note}</span>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="success-actions">
-            <button 
-              className="back-btn"
-              onClick={() => navigateTo("home")}
-            > 
-              Ana Sayfaya Dön 
-            </button>
-            <button 
-              className="new-order-btn"
-              onClick={() => navigateTo("order")}
-            >
-              Yeni Sipariş Ver
-            </button>
+          <div className="final-summary">
+            <h3>Sipariş Toplamı</h3>
+            <div className="summary-line">
+              <span>Seçimler</span>
+              <span>{((orderData.totalPrice - (orderData.quantity * orderData.productPrice)) || 0).toFixed(2)}₺</span>
+            </div>
+            <div className="summary-line final-total">
+              <span>Toplam</span>
+              <span>{orderData.totalPrice.toFixed(2)}₺</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
 
 export default Success;

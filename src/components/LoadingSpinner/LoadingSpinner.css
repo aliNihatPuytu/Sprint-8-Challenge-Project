@@ -1,0 +1,102 @@
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.loading-container {
+  background-color: #fff;
+  padding: 3rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border: 2px solid #FDC913;
+  max-width: 320px;
+  width: 90%;
+}
+
+.spinner-circle {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #FDC913;
+  border-top: 6px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-family: 'Barlow', sans-serif;
+  color: #292929;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+
+.success-check {
+  width: 70px;
+  height: 70px;
+  display: block;
+  margin: 0 auto 1rem;
+  transform: scale(0.9);
+  animation: pop 240ms ease-out forwards;
+}
+
+.success-check-circle {
+  fill: none;
+  stroke: #22C55E;          
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;      
+  animation: dash 450ms ease-out forwards 100ms;
+}
+
+.success-check-mark {
+  stroke: #22C55E;           
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;       
+  animation: draw 350ms ease-out forwards 250ms;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-text {
+  font-family: 'Barlow', sans-serif;
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 0.25rem 0 0;
+}
+
+.success-subtext {
+  font-family: 'Barlow', sans-serif;
+  color: #6b7280; 
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin: 0.25rem 0 0;
+}

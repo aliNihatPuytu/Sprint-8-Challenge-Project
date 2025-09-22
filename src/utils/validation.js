@@ -1,42 +1,42 @@
 export const validateName = (name) => {
   if (!name || name.trim().length < 3) {
-    return "İsim en az 3 karakter olmalıdır"
+    return "İsim en az 3 karakter olmalıdır";
   }
-  return ""
-}
+  return "";
+};
 
 export const validateSize = (size) => {
   if (!size) {
-    return "Pizza boyutu seçilmelidir"
+    return "Pizza boyutu seçilmelidir";
   }
-  return ""
-}
+  return "";
+};
 
 export const validateCrust = (crust) => {
   if (!crust) {
-    return "Hamur kalınlığı seçilmelidir"
+    return "Hamur kalınlığı seçilmelidir";
   }
-  return ""
-}
+  return "";
+};
 
 export const validateToppings = (toppings) => {
-  const selectedToppings = toppings.filter(t => t.selected)
+  const selectedToppings = toppings.filter(t => t.selected);
   if (selectedToppings.length < 4) {
-    return "En az 4 malzeme seçmelisiniz"
+    return "En az 4 malzeme seçmelisiniz";
   }
   if (selectedToppings.length > 10) {
-    return "En fazla 10 malzeme seçebilirsiniz"
+    return "En fazla 10 malzeme seçebilirsiniz";
   }
-  return ""
-}
+  return "";
+};
 
 export const validateForm = (formData) => {
-  const errors = {}
+  const errors = {};
 
-  errors.name = validateName(formData.name)
-  errors.size = validateSize(formData.size)
-  errors.crust = validateCrust(formData.crust)
-  errors.toppings = validateToppings(formData.toppings)
+  errors.name = validateName(formData.name);
+  errors.size = validateSize(formData.size);
+  errors.crust = validateCrust(formData.crust);
+  errors.toppings = validateToppings(formData.toppings);
 
-  return errors
-}
+  return errors;
+};

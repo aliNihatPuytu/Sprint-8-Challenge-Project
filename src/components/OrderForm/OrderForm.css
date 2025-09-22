@@ -1,0 +1,489 @@
+.order-form-page {
+  background-color: #FAF7F2;
+  min-height: 100vh;
+}
+
+.breadcrumb-section {
+  background-color: #CE2829;
+  padding: 0.8rem 0;
+}
+
+.breadcrumb {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.breadcrumb-link:hover {
+  color: #FDC913;
+}
+
+.separator {
+  margin: 0 0.5rem;
+}
+
+.current {
+  font-weight: 600;
+}
+
+.pizza-info-section {
+  background-color: white;
+  padding: 2rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pizza-details {
+  max-width: 800px;
+}
+
+.pizza-name {
+  font-family: 'Barlow', sans-serif;
+  font-size: 2rem;
+  color: #292929;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.pizza-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pizza-price {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.8rem;
+  color: #CE2829;
+  font-weight: 600;
+}
+
+.pizza-rating {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.rating-score {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: #292929;
+}
+
+.rating-count {
+  font-family: 'Quattrocento', serif;
+  color: #5F5F5F;
+}
+
+.pizza-description {
+  font-family: 'Quattrocento', serif;
+  color: #5F5F5F;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.form-section {
+  padding: 3rem 0;
+  background-color: white;
+}
+
+.pizza-form {
+  max-width: 800px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group label,
+.form-group legend {
+  display: block;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: #292929;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.required::after {
+  content: " *";
+  color: #CE2829;
+}
+
+.error-message {
+  display: block;
+  color: #CE2829;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.size-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.size-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: 'Quattrocento', serif;
+  position: relative;
+}
+
+.size-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.size-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  background-color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.size-input:checked + .size-circle {
+  border-color: #FDC913;
+  background-color: #FDC913;
+  color: #292929;
+}
+
+.size-label {
+  font-size: 1rem;
+  color: #292929;
+}
+
+select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Quattrocento', serif;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: #FDC913;
+  box-shadow: 0 0 0 2px rgba(253, 201, 19, 0.2);
+}
+
+select.error {
+  border-color: #CE2829;
+}
+
+.toppings-info {
+  font-family: 'Quattrocento', serif;
+  color: #5F5F5F;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.toppings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.topping-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background-color: #FAF7F2;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.topping-option.selected {
+  background-color: #FDC913;
+  color: #292929;
+}
+
+.topping-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #FDC913;
+}
+
+.topping-name {
+  font-family: 'Quattrocento', serif;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.vegan-badge {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Quattrocento', serif;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #FDC913;
+  box-shadow: 0 0 0 2px rgba(253, 201, 19, 0.2);
+}
+
+.order-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  margin: 3rem 0;
+  flex-wrap: wrap;
+}
+
+.quantity-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantity-btn {
+  background-color: #FDC913;
+  color: #292929;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.quantity-btn:hover:not(:disabled) {
+  background-color: #e6b812;
+  transform: translateY(-1px);
+}
+
+.quantity-display {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: 'Barlow', sans-serif;
+  min-width: 50px;
+  text-align: center;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.order-summary {
+  background-color: #FAF7F2;
+  padding: 2rem;
+  border-radius: 10px;
+  min-width: 250px;
+  border: 1px solid #eee;
+}
+
+.order-summary h3 {
+  font-family: 'Barlow', sans-serif;
+  color: #292929;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-family: 'Quattrocento', serif;
+  color: #292929;
+}
+
+.summary-row.total {
+  font-weight: bold;
+  border-top: 2px solid #CE2829;
+  padding-top: 0.8rem;
+  margin-top: 1rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.2rem;
+  color: #CE2829;
+}
+
+.api-error {
+  background-color: #FFEBEE;
+  color: #CE2829;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-family: 'Barlow', sans-serif;
+  border-left: 4px solid #CE2829;
+  font-weight: 500;
+}
+
+.submit-order-btn {
+  width: 100%;
+  background-color: #FDC913;
+  color: #292929;
+  border: none;
+  padding: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Barlow', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(253, 201, 19, 0.3);
+}
+
+.submit-order-btn:hover:not(:disabled) {
+  background-color: #e6b812;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(253, 201, 19, 0.4);
+}
+
+.submit-order-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: #666;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .order-form-page {
+    background-color: white;
+  }
+  
+  .breadcrumb-section {
+    display: none;
+  }
+  
+  .pizza-info-section {
+    padding: 1rem 0;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .size-options {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .toppings-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .topping-option {
+    padding: 1rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .order-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+  }
+  
+  .quantity-section {
+    justify-content: center;
+    order: 2;
+  }
+  
+  .order-summary {
+    order: 1;
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .pizza-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .pizza-name {
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+  
+  .pizza-description {
+    font-size: 0.9rem;
+  }
+  
+  .form-section {
+    padding: 2rem 0;
+  }
+  
+  .pizza-form {
+    padding: 0;
+  }
+  
+  .submit-order-btn {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}

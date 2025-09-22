@@ -1,0 +1,41 @@
+.main-header {
+  background-color: #CE2829;
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.site-logo {
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.site-logo:hover {
+  transform: scale(1.05);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .site-logo {
+    height: 30px;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
