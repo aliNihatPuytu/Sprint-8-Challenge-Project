@@ -58,13 +58,14 @@
   text-transform:uppercase; 
 }
 
-.success-divider{ 
-  width:100%; 
-  max-width:600px; 
-  height:1px; 
-  background:#fff; 
-  margin:40px auto 0; 
-  border:none; 
+.success-divider{
+  display:block;
+  width:100%;
+  max-width:600px;
+  height:1px;  
+  background-color:#fff;
+  margin:40px auto 0;
+
 }
 
 .order-details{ 
@@ -156,7 +157,7 @@
 .error-content{ 
   text-align:center; 
   padding:40px; 
-  border:1px solid #fff; 
+  border:3px solid #fff;
   border-radius:6px; 
 }
 

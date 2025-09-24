@@ -15,7 +15,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-section">
-          <h4>Hot Menu</h4>
+          <h4>Sıccacık Menuler</h4>
           <ul className="menu-links">
             <li><a href="#">Terminal Pizza</a></li>
             <li><a href="#">5 Kişilik Hackathlon Pizza</a></li>
@@ -30,10 +30,10 @@ const Footer = () => {
           <h4>Instagram</h4>
           <div className="social-grid">
             <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-0.png" alt="Instagram post" className="social-image" />
-            <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-1.png" alt="Instagram post" className="social-image" />
             <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-2.png" alt="Instagram post" className="social-image" />
-            <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-3.png" alt="Instagram post" className="social-image" />
             <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-4.png" alt="Instagram post" className="social-image" />
+            <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-1.png" alt="Instagram post" className="social-image" />
+            <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-3.png" alt="Instagram post" className="social-image" />
             <img loading="lazy" decoding="async" src="/images/iteration-2-images/footer/insta/li-5.png" alt="Instagram post" className="social-image" />
           </div>
         </div>

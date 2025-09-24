@@ -29,7 +29,7 @@ const Success = ({ navigateTo, orderData }) => {
           <div className="order-confirmation-header">
             <p className="success-subtitle">lezzetin yolda</p>
             <h2 className="success-title">SİPARİŞ ALINDI</h2>
-            <hr className="success-divider" />
+            <div className="success-divider" />
           </div>
           <main className="order-details">
             <h3 className="order-item-name">{orderData.productName}</h3>
@@ -67,4 +67,3 @@ const Success = ({ navigateTo, orderData }) => {
   );
 };
 export default Success;
-

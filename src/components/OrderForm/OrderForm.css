@@ -156,7 +156,7 @@ textarea{ resize:vertical; min-height:80px; }
   display:flex; justify-content:space-between; font-size:.95rem; margin:0 0 8px; color:var(--muted);
 }
 .order-summary .price-details .total{
-  font-weight:700; color:var(--red); font-size:1rem; border-top:1px solid var(--line);
+  font-weight:700; color:var(--red); font-size:1rem;
   padding-top:8px; margin-top:8px; margin-bottom:30px;
 }
 .submit-button{

@@ -12,18 +12,21 @@ export const CRUST_TYPES = [
 
 export const TOPPINGS = [
   { id: 'pepperoni', name: 'Pepperoni', price: 5, isVegan: false },
-  { id: 'sosis', name: 'Sosis', price: 5, isVegan: false },
-  { id: 'jambon', name: 'Kanada Jambonu', price: 5, isVegan: false },
-  { id: 'tavuk', name: 'Tavuk Izgara', price: 5, isVegan: false },
-  { id: 'sogan', name: 'Soğan', price: 5, isVegan: true },
   { id: 'domates', name: 'Domates', price: 5, isVegan: true },
+  { id: 'biber', name: 'Biber', price: 5, isVegan: true },
+  { id: 'sosis', name: 'Sosis', price: 5, isVegan: false },
   { id: 'misir', name: 'Mısır', price: 5, isVegan: true },
   { id: 'sucuk', name: 'Sucuk', price: 5, isVegan: false },
-  { id: 'jalapeno', name: 'Jalepeno', price: 5, isVegan: true },
-  { id: 'sarimsak', name: 'Sarımsak', price: 5, isVegan: true },
-  { id: 'biber', name: 'Biber', price: 5, isVegan: true },
+  { id: 'jambon', name: 'Kanada Jambonu', price: 5, isVegan: false },
+  { id: 'sucuk', name: 'Sucuk', price: 5, isVegan: false },
   { id: 'ananas', name: 'Ananas', price: 5, isVegan: true },
-  { id: 'kabak', name: 'Kabak', price: 5, isVegan: true }
+  { id: 'tavuk', name: 'Tavuk Izgara', price: 5, isVegan: false },
+  { id: 'jalapeno', name: 'Jalepeno', price: 5, isVegan: true },
+  { id: 'kabak', name: 'Kabak', price: 5, isVegan: true },
+  { id: 'sogan', name: 'Soğan', price: 5, isVegan: true },
+  { id: 'sarimsak', name: 'Sarımsak', price: 5, isVegan: true },
+  
+  
 ];
 
 export const COLORS = { 
