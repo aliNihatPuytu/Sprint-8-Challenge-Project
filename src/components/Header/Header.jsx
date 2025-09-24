@@ -6,9 +6,9 @@ const Header = ({ navigateTo }) => {
     <header className="main-header">
       <div className="container">
         <div className="header-content">
-          <img 
-            src="/images/iteration-1-images/logo.svg" 
-            alt="Teknolojik Yemekler" 
+          <img
+            src="/images/iteration-1-images/logo.svg"
+            alt="Teknolojik Yemekler"
             className="site-logo"
             onClick={() => navigateTo("home")}
           />

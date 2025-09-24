@@ -16,6 +16,7 @@ function App() {
   const navigateTo = (page, product = null) => {
     setCurrentPage(page);
     if (product) setSelectedProduct(product);
+    window.scrollTo(0, 0);
   };
 
   const handleOrderSubmit = (data) => {
@@ -44,19 +45,19 @@ function App() {
 
   return (
     <div className="app">
-      {currentPage !== "home" && <Header navigateTo={navigateTo} />}
+      {currentPage === "order" && <Header navigateTo={navigateTo} />}
       <main className="main-content">{renderPage()}</main>
       {currentPage === "home" && <Footer />}
 
       {isLoading && (
         <LoadingSpinner
-          duration={5000}    
-          successHold={2000}  
+          duration={5000}
+          successHold={2000}
           loadingText="Siparişiniz gönderiliyor..."
           successText="Gönderildi!"
           onDone={() => {
             setIsLoading(false);
-            setCurrentPage("success"); 
+            setCurrentPage("success");
           }}
         />
       )}

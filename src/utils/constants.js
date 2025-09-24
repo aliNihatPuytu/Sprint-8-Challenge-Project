@@ -5,7 +5,7 @@ export const PIZZA_SIZES = [
 ];
 
 export const CRUST_TYPES = [
-  { id: 'thin', name: 'Süper İnce', description: 'İnce ve çıtır' },
+  { id: 'thin', name: 'Süpper İnce', description: 'İnce ve çıtır' },
   { id: 'normal', name: 'Normal', description: 'Klasik lezzet' },
   { id: 'thick', name: 'Kalın', description: 'Bol malzemeli' }
 ];
@@ -26,7 +26,7 @@ export const TOPPINGS = [
   { id: 'kabak', name: 'Kabak', price: 5, isVegan: true }
 ];
 
-export const COLORS = {
+export const COLORS = { 
   yellow: '#FDC913',
   lightGray: '#5F5F5F',
   darkGray: '#292929',

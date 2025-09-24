@@ -10,12 +10,11 @@ export const calculateTotalPrice = (sizeId, toppings, baseProductPrice = 85.50) 
     }
   });
 
-  return total.toFixed(2);
+  return total;
 };
 
 export const calculateToppingsPrice = (toppings) => {
   return toppings
     .filter(t => t.selected)
-    .reduce((total, topping) => total + topping.price, 0)
-    .toFixed(2);
+    .reduce((total, topping) => total + topping.price, 0);
 };

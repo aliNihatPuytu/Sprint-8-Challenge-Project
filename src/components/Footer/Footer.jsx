@@ -13,6 +13,7 @@ const Footer = () => {
             <p><img src="/images/iteration-2-images/footer/icons/icon-3.png" alt="" className="contact-icon" />+90 216 123 45 67</p>
           </div>
         </div>
+
         <div className="footer-section">
           <h4>Hot Menu</h4>
           <ul className="menu-links">
@@ -24,6 +25,7 @@ const Footer = () => {
             <li><a href="#">Position Absolute Acı Burger</a></li>
           </ul>
         </div>
+
         <div className="footer-section">
           <h4>Instagram</h4>
           <div className="social-grid">
@@ -36,11 +38,12 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
       <div className="footer-bottom">
         <p>© 2023 Teknolojik Yemekler.</p>
         <div className="social-icons">
           <a href="#" aria-label="Twitter">
-            <img src="images\twitter-icon.png" alt="Twitter" />
+            <img src="/images/twitter-icon.png" alt="Twitter" />
           </a>
         </div>
       </div>
