@@ -22,7 +22,7 @@
 
 .home { background-color: var(--beige); }
 
-/* HERO */
+
 .hero-section{
   background-image:url("/images/iteration-1-images/home-banner.png");
   background-repeat:no-repeat;
@@ -40,7 +40,7 @@
 .cta-button:hover{ transform:scale(1.05); }
 .hero-decorations{ position:absolute; inset:0; z-index:1; pointer-events:none; }
 
-/* NAV */
+
 .nav-menu{
   background:#fff; padding:25px 20px;
   display:flex; justify-content:center; flex-wrap:wrap; gap:40px;
@@ -50,10 +50,10 @@
 .nav-item:hover{ background:#f5f5f5; }
 .nav-item img{ width:28px; height:28px; flex-shrink:0; }
 
-/* CONTENT */
+
 .content-section{ padding:60px 24px; width:var(--cards-w); margin: 60px auto; }
 
-/* 3 BOX */
+
 .cards-container{
   width:var(--cards-w); height:var(--cards-h);
   margin: 0 auto 100px;
@@ -80,7 +80,7 @@
 .bg-kart3{ background-image:url("/images/iteration-2-images/cta/kart-3.png"); background-size:100% 100%; background-position:center; background-repeat:no-repeat; }
 .promo-card.promo-card--light.bg-kart3 .promo-card__content{ margin:20px; background:transparent; }
 
-/* "hızlı npm gibi kurye" KOYU GRİ – her breakpoint’te geçerli */
+
 .promo-card__muted{ color:var(--dark-gray) !important; }
 
 .promo-card__button{
@@ -89,7 +89,7 @@
 }
 .promo-card__button:hover{ transform:translateY(-1px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
 
-/* PRODUCTS */
+
 .products-header{ text-align:center; margin: 0 auto 40px; }
 .products-subtitle{ font-family:'Satisfy',cursive; color:var(--red); font-size:1.5rem; margin-bottom:10px; }
 .products-title{ font-family:'Barlow',sans-serif; font-size:2.2rem; color:var(--dark-gray); font-weight:600; }
@@ -107,7 +107,7 @@
 .product-info{ padding:28px 32px 30px; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
 .product-name{ font-family:'Barlow',sans-serif; font-size:1.4rem; font-weight:600; line-height:1.2; color:var(--dark-gray); align-self:flex-start; }
 
-/* RATING SATIRI: sol rating – ORTA count – sağ fiyat (aynı punto) */
+
 .product-rating{
   width:100%;
   display:grid;
@@ -125,21 +125,21 @@
 .rating-count{
   justify-self:center;
   margin:0;
-  font-size:1rem;          /* AYNI PUNTO */
+  font-size:1rem;          
   font-weight:600;
-  color:var(--dark-gray);  /* koyu, net */
+  color:var(--dark-gray); 
   font-family:'Barlow',sans-serif;
 }
 .product-price{
   justify-self:end;
   margin:0;
-  font-size:1rem;          /* AYNI PUNTO */
+  font-size:1rem;         
   font-weight:600;
   color:var(--dark-gray);
   font-family:'Barlow',sans-serif;
 }
 
-/* MEDIA */
+
 @media (max-width:1199.98px){
   .hero-section{ background-position:center; }
   .hero-title{ text-align:center; line-height:1.2; }

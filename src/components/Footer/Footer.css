@@ -1,5 +1,3 @@
-/* Footer.css */
-
 .footer{
   background:#292929;
   color:#fff;
@@ -14,9 +12,8 @@
   width:1066px;
   height:390.37px;
   display:grid;
-  /* gap azaltıldı, 1. kolon biraz daraltıldı */
-  grid-template-columns:1.28fr 1fr 1fr; /* was: 1.35fr 1fr 1fr */
-  column-gap:28px;                      /* was: 40px */
+  grid-template-columns:1.28fr 1fr 1fr; 
+  column-gap:28px;                     
   align-items:start;
 }
 

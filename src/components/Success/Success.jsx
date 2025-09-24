@@ -1,4 +1,3 @@
-
 import React from "react";
 import "./Success.css";
 const Success = ({ navigateTo, orderData }) => {
