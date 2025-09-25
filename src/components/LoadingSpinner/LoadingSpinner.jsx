@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./LoadingSpinner.css";
 
 const LoadingSpinner = ({
-  duration = 1000,       
-  successHold = 1000,    
+  duration = 700,       
+  successHold = 500,    
   onDone,                
   loadingText = "Siparişiniz gönderiliyor...",
   successText = "Gönderildi!"

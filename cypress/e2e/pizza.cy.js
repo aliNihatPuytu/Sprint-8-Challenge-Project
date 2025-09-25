@@ -1,333 +1,340 @@
-describe('Teknolojik Yemekler Pizza Sipariş Testleri', () => {
-  const BASE_URL = Cypress.config('baseUrl') || 'http://localhost:5173';
-  
+const APP_URL =
+  Cypress.config("baseUrl") ||
+  Cypress.env("APP_URL") ||
+  "http://localhost:5173";
 
-  const testData = {
-    validName: 'Ahmet Yılmaz',
-    shortName: 'Ah',
-    pizzaSize: 'Orta',
-    doughType: 'Normal Hamur',
-    basePrice: 85.5,
-    toppingPrice: 5,
-  };
+const goHome = () => {
+  cy.visit(APP_URL);
+  cy.viewport(1280, 720);
+};
 
-  const mockSuccessResponse = {
-    statusCode: 201,
-    body: {
-      id: Math.random().toString(36).slice(2, 11),
-      createdAt: new Date().toISOString(),
-    },
-  };
+const goOrderForm = () => {
+  goHome();
+  cy.contains("button", /^ACIKTIM$/).should("be.visible").click();
+  cy.get("form.order-card").should("be.visible");
+  cy.get("#name-input").should("exist");
+  cy.get('input[name="size"]').should("have.length.at.least", 3);
+  cy.get("#crust-select").should("exist");
+};
 
-  const mockErrorResponse = {
-    statusCode: 500,
-    body: { error: 'Sunucu hatası' },
-  };
+const fillName = (text = "Ahmet Yılmaz") => {
+  cy.get("#name-input").clear().type(text).should("have.value", text);
+};
 
+const chooseSize = (value = "medium") => {
+  cy.get(`input[name="size"][value="${value}"]`)
+    .check({ force: true })
+    .should("be.checked");
+};
 
-  const goHome = () => cy.visit(BASE_URL);
+const chooseCrust = (value = "normal") => {
+  cy.get("#crust-select").select(value).should("have.value", value);
+};
 
-  const clickOrderCTA = () => cy.contains(/^ACIKTIM$/).click();
+const selectToppingsByText = (labels = []) => {
+  labels.forEach((label) => {
+    cy.contains(".toppings-grid label", label)
+      .find('input[type="checkbox"]')
+      .check({ force: true })
+      .should("be.checked");
+  });
+};
 
-  const getForm = () => cy.get('form').first();
+const submitButton = () =>
+  cy.get('button[type="submit"]:visible').should("contain", "SİPARİŞ VER");
 
-  const nameInput = () => cy.get('input[name="name"]');
-
-  const submitBtn = () => cy.get('button[type="submit"]').first();
-
-  const totalPrice = () => cy.get('[data-testid="total-price"]');
-
-  const selectSize = (labelText) => {
-
-    cy.contains('label', labelText).click({ force: true });
-  };
-
-  const selectCrust = (labelText) => {
-    cy.contains('label', labelText).click({ force: true });
-  };
-
-  const toppingsScope = () => {
-
-    return cy.get('[data-testid="toppings"]').then(
-      $el => ($el.length ? cy.wrap($el) : getForm())
-    );
-  };
-
-  const toppings = () =>
-    toppingsScope().find('input[type="checkbox"]:visible');
-
-  const selectToppings = (count) => {
-    toppings().should('have.length.greaterThan', 0);
-    toppings().each(($cb, idx) => {
-      if (idx < count) cy.wrap($cb).check({ force: true });
+const expectTotal = (valueText) => {
+  cy.get(".order-summary .price-details p.total")
+    .find("span")
+    .eq(1)
+    .should(($s) => {
+      expect($s.text().replace(/\s/g, "")).to.eq(valueText);
     });
-  };
+};
 
-  const fillMandatoryFields = () => {
-    nameInput().clear().type(testData.validName).blur();
-    selectSize(testData.pizzaSize);
-    selectCrust(testData.doughType);
-  };
+const expectSelections = (valueText) => {
+  cy.contains(".order-summary .price-details p", "Seçimler")
+    .find("span")
+    .eq(1)
+    .should(($s) => {
+      expect($s.text().replace(/\s/g, "")).to.eq(valueText);
+    });
+};
 
+const setBaseOrder = () => {
+  fillName("Ali Veli");
+  chooseSize("small");     
+  chooseCrust("thin");      
+  selectToppingsByText(["Pepperoni", "Domates", "Biber", "Mısır"]); 
+
+};
+
+describe("Teknolojik Yemekler - Pizza Sipariş Akışı", () => {
   beforeEach(() => {
-    goHome();
-    cy.viewport(1280, 720);
-  });
-
-
-  describe('Ana Sayfa Testleri', () => {
-    it('Ana sayfa başlık ve slogan görüntülenmeli', () => {
-      cy.get('h1').should('contain', 'Teknolojik Yemekler');
-      cy.contains('KOD ACIKTIRIR PIZZA, DOYURUR').should('be.visible');
-    });
-
-    it('Sipariş butonu görünür ve aktif olmalı', () => {
-      cy.contains(/^ACIKTIM$/)
-        .should('be.visible')
-        .and('not.be.disabled')
-        .and('have.css', 'cursor', 'pointer');
-    });
-
-    it('Header bileşeni doğru render edilmeli', () => {
-      cy.get('header').should('exist');
-      cy.get('nav').should('be.visible');
-      cy.get('img[alt*="logo" i]').should('be.visible');
+    Cypress.on("uncaught:exception", (err) => {
+      if (/ResizeObserver loop limit exceeded/i.test(err.message)) return false;
+      return undefined;
     });
   });
 
 
-  describe('Navigasyon Testleri', () => {
-    it('Sipariş butonu form sayfasına yönlendirmeli', () => {
-      clickOrderCTA();
-      cy.url().should('include', '/pizza');
-      cy.contains('Sipariş Oluştur').should('be.visible');
-    });
-
-    it('Geri butonu ana sayfaya yönlendirmeli', () => {
-      clickOrderCTA();
-      cy.contains('button', 'Geri').click();
-      cy.url().should('eq', `${BASE_URL}/`);
-    });
+  it("İsim inputuna metin girer", () => {
+    goOrderForm();
+    fillName("Fatma Nur");
   });
 
 
-  describe('Form Validasyon Testleri', () => {
-    beforeEach(() => {
-      clickOrderCTA();
-    });
-
-    describe('İsim Validasyonu', () => {
-      it('İsim alanı minimum 3 karakter olmalı ve uyarı blur ile submite basmadan görünmeli', () => {
-        nameInput().type(testData.shortName).blur();
-        cy.contains('İsim en az 3 karakter olmalıdır')
-          .should('be.visible')
-          .and('have.class', 'error');
-        submitBtn().should('be.disabled');
-      });
-
-      it('Geçerli isimde hata mesajı görünmemeli', () => {
-        nameInput().type(testData.validName).blur();
-        cy.contains('İsim en az 3 karakter olmalıdır').should('not.exist');
-      });
-
-      it('İsim alanı zorunlu olmalı', () => {
-        nameInput().focus().blur();
-        cy.contains('İsim gereklidir').should('be.visible');
-      });
-    });
-
-    describe('Pizza Boyutu Validasyonu', () => {
-      it('Pizza boyutu seçilmezse uyarı gösterilmeli ve submit disabled kalmalı', () => {
-        nameInput().type(testData.validName).blur();
-        selectCrust(testData.doughType);
-        submitBtn().click({ force: true });
-        cy.contains('Pizza boyutu seçilmelidir').should('be.visible');
-        submitBtn().should('be.disabled');
-      });
-
-      it('Tüm boyut seçenekleri görünür olmalı', () => {
-        ['Küçük', 'Orta', 'Büyük'].forEach(size => {
-          cy.contains(size).should('be.visible');
-        });
-      });
-    });
-
-    describe('Hamur Kalınlığı Validasyonu', () => {
-      it('Hamur seçilmezse uyarı gösterilmeli ve submit disabled kalmalı', () => {
-        nameInput().type(testData.validName).blur();
-        selectSize(testData.pizzaSize);
-        submitBtn().click({ force: true });
-        cy.contains('Hamur kalınlığı seçilmelidir').should('be.visible');
-        submitBtn().should('be.disabled');
-      });
-    });
-
-    describe('Malzeme Seçim Validasyonu', () => {
-      it('Minimum 4 malzeme seçilmeli (uyarı submite basmadan görünmeli)', () => {
-        fillMandatoryFields();
-        selectToppings(3);
-      
-        cy.contains('En az 4 malzeme seçmelisiniz').should('be.visible');
-        submitBtn().should('be.disabled');
-      });
-
-      it('Maksimum 10 malzeme seçilebilmeli (11. seçim engellenir)', () => {
-        fillMandatoryFields();
-        selectToppings(11);
-        cy.contains('En fazla 10 malzeme seçebilirsiniz').should('be.visible');
-        toppings().filter(':checked').should('have.length', 10);
-      });
-
-      it('4-10 arası seçimde hata olmamalı ve submit enable olmalı', () => {
-        fillMandatoryFields();
-        selectToppings(6);
-        cy.contains('En az 4 malzeme seçmelisiniz').should('not.exist');
-        cy.contains('En fazla 10 malzeme seçebilirsiniz').should('not.exist');
-        submitBtn().should('not.be.disabled');
-      });
-    });
-  });
-
-
-  describe('Fiyat Hesaplama Testleri', () => {
-    beforeEach(() => {
-      clickOrderCTA();
-      fillMandatoryFields();
-    });
-
-    it('Temel fiyat doğru gösterilmeli', () => {
-      cy.contains(`${testData.basePrice} ₺`).should('be.visible');
-    });
-
-    it('Malzeme ekledikçe fiyat artmalı', () => {
-      const toppingCount = 4;
-      selectToppings(toppingCount);
-      const expected = testData.basePrice + toppingCount * testData.toppingPrice;
-      cy.contains(`${expected.toFixed(2)} ₺`).should('be.visible');
-    });
-
-    it('Malzeme çıkarılınca fiyat azalmalı', () => {
-      selectToppings(5);
-      toppings().filter(':checked').first().uncheck({ force: true });
-      const expected = testData.basePrice + 4 * testData.toppingPrice;
-      cy.contains(`${expected.toFixed(2)} ₺`).should('be.visible');
-    });
-
-    it('Boyut değişince fiyat güncellenmeli', () => {
-      selectToppings(4);
-      cy.contains('label', 'Büyük').click({ force: true });
-      totalPrice()
-        .invoke('text')
-        .then((t) => {
-          const price = parseFloat(t.replace(' ₺', '').replace(',', '.'));
-          expect(price).to.be.greaterThan(testData.basePrice + 20);
-        });
-    });
-  });
-
-
-  describe('Sipariş Gönderim Testleri', () => {
-    beforeEach(() => {
-      clickOrderCTA();
-      fillMandatoryFields();
-      selectToppings(4);
-    });
-
-    it('Başarılı sipariş sonrası tebrik mesajı gösterilmeli', () => {
-      cy.intercept('POST', '**/api/pizza', mockSuccessResponse).as('orderOk');
-      submitBtn().click();
-      cy.wait('@orderOk').its('response.statusCode').should('eq', 201);
-
-      cy.contains('TEBRİKLER!').should('be.visible');
-      cy.contains('SİPARİŞİNİZ ALINDI!').should('be.visible');
-      cy.contains('Ana Sayfaya Dön').should('be.visible');
-    });
-
-    it('API 500 hatasında kullanıcı bilgilendirilmeli', () => {
-      cy.intercept('POST', '**/api/pizza', mockErrorResponse).as('orderErr');
-      submitBtn().click();
-      cy.wait('@orderErr');
-
-
-      cy.contains(/Sunucuya bağlanılamıyor|Lütfen daha sonra tekrar deneyiniz/i).should('be.visible');
-      cy.get('[role="alert"]').should('exist');
-    });
-
-    it('Network hatası durumunda hata yönetimi çalışmalı', () => {
-      cy.intercept('POST', '**/api/pizza', { forceNetworkError: true }).as('netErr');
-      submitBtn().click();
-      cy.wait('@netErr');
-      cy.contains(/Network hatası oluştu|bağlanılamadı/i).should('be.visible');
-    });
-
-    it('Gönderim sırasında loading state ve buton disable olmalı', () => {
-      cy.intercept('POST', '**/api/pizza', { delay: 1000, ...mockSuccessResponse }).as('delayed');
-      submitBtn().click();
-      submitBtn().should('be.disabled');
-      cy.contains(/Sipariş Gönderiliyor/i).should('be.visible');
-      cy.wait('@delayed');
-    });
+  it("Birden fazla malzeme seçilebilir", () => {
+    goOrderForm();
+    selectToppingsByText(["Pepperoni", "Domates", "Biber", "Mısır"]);
+    cy.get('.toppings-grid input[type="checkbox"]:checked').should(
+      "have.length.at.least",
+      4
+    );
   });
 
  
-  describe('Kullanıcı Deneyimi Testleri', () => {
-    it('Form öğeleri focus durumunda doğru çalışmalı', () => {
-      clickOrderCTA();
-      nameInput().focus().should('have.focus');
-      toppings().first().focus().should('have.focus');
-    });
+  it("Validasyon hataları boş gönderimde görünür", () => {
+    goOrderForm();
+    submitButton().click();
 
-    it('Malzeme seçiminde görsel feedback olmalı (border rengi değişimi)', () => {
-      clickOrderCTA();
-      toppings().first().check({ force: true }).should('be.checked');
-      toppings().first().parent().should('have.css', 'border-color');
-    });
+    cy.get('[data-cy="error-size"]').should("be.visible").and("contain", "Pizza boyutunu seçmelisiniz");
+    cy.get('[data-cy="error-crust"]').should("be.visible").and("contain", "Hamur kalınlığını seçmelisiniz");
+    cy.get('[data-cy="error-toppings"]').should("be.visible").and("contain", "En az 4 malzeme seçmelisiniz");
+    cy.get('[data-cy="error-name"]').should("be.visible").and("contain", "İsim en az 3 karakter olmalıdır");
+  });
 
-    it('Responsive tasarım (iPhone 6)', () => {
-      cy.viewport('iphone-6');
-      clickOrderCTA();
-      getForm().should('be.visible');
-      nameInput().should('be.visible');
-      nameInput().invoke('outerWidth').should('be.lessThan', 400);
-    });
-
-    it('Form reset işlemi çalışmalı (geri dönünce sıfırlanır)', () => {
-      clickOrderCTA();
-      fillMandatoryFields();
-      selectToppings(5);
-
-      cy.contains('Geri').click();
-      clickOrderCTA();
-
-      nameInput().should('have.value', '');
-      toppings().filter(':checked').should('have.length', 0);
-    });
+ 
+  it("Toplam fiyat boyut seçimine göre güncellenir", () => {
+    goOrderForm();
+    expectTotal("85.50₺");   
+    chooseSize("large");
+    expectTotal("105.50₺");
   });
 
 
-  describe('Erişilebilirlik Testleri', () => {
-    it('Form elementleri erişilebilir olmalı', () => {
-      clickOrderCTA();
-      nameInput().should('have.attr', 'aria-required', 'true');
-      cy.get('fieldset').should('have.attr', 'aria-labelledby');
-      submitBtn().should('have.attr', 'type', 'submit');
+  it("En fazla 10 malzeme sınırı: 11. seçim engellenir", () => {
+    goOrderForm();
+    cy.get('.toppings-grid input[type="checkbox"]').should("have.length.at.least", 11);
+    cy.get('.toppings-grid input[type="checkbox"]').each(($chk, idx) => {
+      if (idx < 10) cy.wrap($chk).check({ force: true }).should("be.checked");
     });
-
-    it('Hata mesajları screen reader için uygun olmalı', () => {
-      clickOrderCTA();
-      nameInput().focus().blur();
-      cy.get('[role="alert"]').should('contain', 'İsim gereklidir');
-    });
-
-    it('Klavye navigasyonu çalışmalı', () => {
-      clickOrderCTA();
-      cy.get('body').type('{tab}');
-      cy.focused().should('have.attr', 'name', 'name');
-      cy.get('body').type('{tab}');
-    });
+    cy.get('.toppings-grid input[type="checkbox"]').eq(10).should("be.disabled");
   });
 
-  afterEach(() => {
-    cy.window().then((win) => win.sessionStorage && win.sessionStorage.clear());
+
+  it("Form başarıyla gönderilir ve başarı sayfası görüntülenir", () => {
+    goOrderForm();
+
+    fillName("Ahmet Yılmaz");
+    chooseSize("medium");
+    chooseCrust("normal");
+    selectToppingsByText(["Pepperoni", "Domates", "Biber", "Mısır"]);
+
+    cy.intercept("POST", "**/api/pizza", {
+      statusCode: 201,
+      body: { id: "order_abc123", createdAt: new Date().toISOString() },
+    }).as("postOrder");
+
+    cy.clock();
+    submitButton().click();
+    cy.wait("@postOrder").its("response.statusCode").should("eq", 201);
+
+    cy.get(".loading-overlay .loading-text").should("contain", "Siparişiniz gönderiliyor...");
+    cy.tick(1000);
+    cy.get(".loading-overlay .success-text").should("contain", "Gönderildi!");
+    cy.get(".loading-overlay .success-subtext").should("contain", "Yönlendiriliyorsunuz…");
+    cy.tick(1000);
+
+    cy.contains(".success-title", "SİPARİŞ ALINDI").should("be.visible");
+    cy.contains(".summary-title", "Sipariş Toplamı").should("be.visible");
+    cy.contains(".order-specs .spec-label", "Boyut:").siblings(".spec-value").should("not.be.empty");
+    cy.contains(".order-specs .spec-label", "Hamur:").siblings(".spec-value").should("not.be.empty");
+  });
+
+
+  it("Home ürün kartından form sayfasına geçiş", () => {
+    goHome();
+    cy.contains(".product-card .product-name", "Terminal Pizza")
+      .closest(".product-card")
+      .click();
+    cy.get("form.order-card").should("be.visible");
+    cy.get(".product-title").should("be.visible");
+  });
+
+
+  it("Header logosu Order sayfasından Anasayfa'ya döndürür", () => {
+    goOrderForm();
+    cy.get(".main-header .site-logo").should("be.visible").click();
+    cy.get(".hero-section").should("be.visible");
+    cy.contains("button", /^ACIKTIM$/).should("be.visible");
+  });
+
+
+  it("Footer içeriği doğru render edilir (iletişim + Instagram grid)", () => {
+    goOrderForm();
+    cy.get("footer.footer").should("be.visible");
+    cy.get(".contact-info").within(() => {
+      cy.contains("İstanbul Türkiye");
+      cy.contains("aciktim@teknolojikyemekler.com");
+      cy.contains("+90 216 123 45 67");
+    });
+    cy.get(".social-grid .social-image").should("have.length", 6);
+  });
+
+
+  it("Adet arttıkça 'Seçimler' ve 'Toplam' doğru güncellenir", () => {
+    goOrderForm();
+    setBaseOrder(); 
+
+    expectSelections("20.00₺");
+    expectTotal("85.50₺");
+    cy.get(".actions-row > .quantity-selector").find("button").eq(1).click(); 
+    expectSelections("40.00₺");
+    expectTotal("171.00₺");
+
+    cy.get(".actions-row > .quantity-selector").find("button").eq(0).click(); 
+    expectSelections("20.00₺");
+    expectTotal("85.50₺");
+  });
+
+  it("Hatalar düzeltildikçe kaybolur (happy path)", () => {
+    goOrderForm();
+    submitButton().click();
+
+    chooseSize("medium");
+    cy.get('[data-cy="error-size"]').should("not.exist");
+
+    chooseCrust("normal");
+    cy.get('[data-cy="error-crust"]').should("not.exist");
+
+    selectToppingsByText(["Pepperoni", "Domates", "Biber", "Mısır"]);
+    cy.get('[data-cy="error-toppings"]').should("not.exist");
+
+    cy.get("#name-input").clear().type("Al").blur();
+    cy.get('[data-cy="error-name"]').should("contain", "İsim en az 3 karakter olmalıdır");
+    cy.get("#name-input").type("i").blur(); 
+    cy.get('[data-cy="error-name"]').should("not.exist");
+  });
+
+
+  it("Mobil görünümde mobil submit görünür, desktop submit gizli", () => {
+    goOrderForm();
+    cy.viewport(390, 844);
+
+    cy.get(".submit-button-mobile").should("be.visible");
+    cy.get(".order-summary .submit-button").should("not.be.visible");
+    cy.get(".quantity-selector-container .quantity-selector").should("be.visible");
+  });
+
+
+  it("Breadcrumb 'Anasayfa' bağlantısı Home'a döndürür", () => {
+    goOrderForm();
+    cy.get(".breadcrumb-section .breadcrumb-link").contains("Anasayfa").click();
+    cy.get(".hero-section").should("be.visible");
+    cy.contains("button", /^ACIKTIM$/).should("be.visible");
+  });
+
+
+  it("Radio grup seçimi tekil kalır (exclusive)", () => {
+    goOrderForm();
+    chooseSize("small");
+    cy.get('input[name="size"][value="small"]').should("be.checked");
+
+    chooseSize("large");
+    cy.get('input[name="size"][value="large"]').should("be.checked");
+    cy.get('input[name="size"][value="small"]').should("not.be.checked");
+  });
+
+  
+  it("Desktop görünümünde desktop quantity görünür, mobil container gizli", () => {
+    goOrderForm();
+    cy.viewport(1280, 720);
+
+    cy.get(".actions-row > .quantity-selector").should("be.visible");
+    cy.get(".quantity-selector-container").should("not.be.visible");
+    cy.get(".order-summary .submit-button").should("be.visible");
+  });
+
+
+  it("Adet 1'in altına düşmez, azalt butonu 1'de disabled", () => {
+    goOrderForm();
+    cy.get(".actions-row > .quantity-selector").as("qty");
+    cy.get("@qty").find("span").should("contain", "1");
+    cy.get("@qty").find("button").eq(0).should("be.disabled"); 
+    cy.get("@qty").find("button").eq(1).click(); 
+    cy.get("@qty").find("span").should("contain", "2");
+    cy.get("@qty").find("button").eq(0).should("not.be.disabled").click(); 
+    cy.get("@qty").find("span").should("contain", "1");
+    cy.get("@qty").find("button").eq(0).should("be.disabled");
+  });
+
+
+  it("10 seçili olduğunda kalan checkbox label'ları 'disabled' sınıfı alır", () => {
+    goOrderForm();
+    cy.get('.toppings-grid input[type="checkbox"]').should("have.length.at.least", 11);
+
+    cy.get('.toppings-grid input[type="checkbox"]').each(($chk, idx) => {
+      if (idx < 10) cy.wrap($chk).check({ force: true });
+    });
+
+  
+    cy.get('.toppings-grid input[type="checkbox"]').eq(10)
+      .should("be.disabled")
+      .parents("label.checkbox-label")
+      .should("have.class", "disabled");
+  });
+
+  it("Fiyat hesabı: Large + 6 topping + adet 3 → Seçimler 90.00₺, Toplam 406.50₺", () => {
+    goOrderForm();
+    fillName("Test Kullanıcı");
+    chooseSize("large"); 
+    chooseCrust("normal");
+
+
+    cy.get('.toppings-grid input[type="checkbox"]').then(($inputs) => {
+      for (let i = 0; i < 6; i++) {
+        cy.wrap($inputs[i]).check({ force: true });
+      }
+    });
+
+
+    cy.get(".actions-row > .quantity-selector").find("button").eq(1).click().click(); 
+    expectSelections("90.00₺");  
+    expectTotal("406.50₺");     
+  });
+
+
+  it("Başarı sayfasında ürün adı fallback olarak 'Position Absolute Acı Pizza' gösterilir", () => {
+    goOrderForm(); 
+
+    fillName("Ayşe Kaya");
+    chooseSize("small");
+    chooseCrust("thin");
+    selectToppingsByText(["Pepperoni", "Domates", "Biber", "Mısır"]);
+
+    cy.intercept("POST", "**/api/pizza", {
+      statusCode: 201,
+      body: { id: "order_xyz", createdAt: new Date().toISOString() },
+    }).as("postOrder2");
+
+    cy.clock();
+    submitButton().click();
+    cy.wait("@postOrder2");
+
+    cy.tick(1000); 
+    cy.tick(1000); 
+
+    cy.get(".order-item-name")
+      .should("be.visible")
+      .and("contain", "Position Absolute Acı Pizza");
+  });
+
+
+  it("Home: kategori navigasyonu ve sekmeler doğru (Pizza aktif)", () => {
+    goHome();
+    cy.get(".nav-menu .nav-item").should("have.length", 6);
+    cy.get(".category-tabs .tab").should("have.length", 6);
+    cy.get(".category-tabs .tab.active").should("contain.text", "Pizza");
   });
 });
