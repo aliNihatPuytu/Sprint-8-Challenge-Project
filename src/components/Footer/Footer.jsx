@@ -6,11 +6,36 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section">
-          <img src="/images/iteration-2-images/footer/logo-footer.svg" alt="Teknolojik Yemekler" className="footer-logo" />
+          <img
+            src="/images/iteration-2-images/footer/logo-footer.svg"
+            alt="Teknolojik Yemekler"
+            className="footer-logo"
+          />
           <div className="contact-info">
-            <p><img src="/images/iteration-2-images/footer/icons/icon-1.png" alt="" className="contact-icon" />341 Londonderry Road,<br />İstanbul Türkiye</p>
-            <p><img src="/images/iteration-2-images/footer/icons/icon-2.png" alt="" className="contact-icon" />aciktim@teknolojikyemekler.com</p>
-            <p><img src="/images/iteration-2-images/footer/icons/icon-3.png" alt="" className="contact-icon" />+90 216 123 45 67</p>
+            <p>
+              <img
+                src="/images/iteration-2-images/footer/icons/icon-1.png"
+                alt=""
+                className="contact-icon"
+              />
+              341 Londonderry Road,<br />İstanbul Türkiye
+            </p>
+            <p>
+              <img
+                src="/images/iteration-2-images/footer/icons/icon-2.png"
+                alt=""
+                className="contact-icon"
+              />
+              aciktim@teknolojikyemekler.com
+            </p>
+            <p>
+              <img
+                src="/images/iteration-2-images/footer/icons/icon-3.png"
+                alt=""
+                className="contact-icon"
+              />
+              +90 216 123 45 67
+            </p>
           </div>
         </div>
 
@@ -40,11 +65,13 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2023 Teknolojik Yemekler.</p>
-        <div className="social-icons">
-          <a href="#" aria-label="Twitter">
-            <img src="/images/twitter-icon.png" alt="Twitter" />
-          </a>
+        <div className="footer-bottom-inner">
+          <p>© 2023 Teknolojik Yemekler.</p>
+          <div className="social-icons">
+            <a href="#" aria-label="Twitter">
+              <img src="/images/twitter-icon.png" alt="Twitter" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,25 +1,24 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('fillPizzaForm', (options = {}) => {
+  const defaults = {
+    name: 'Test Kullanıcı',
+    size: 'Orta',
+    dough: 'Normal Hamur',
+    toppingsCount: 4
+  };
+  
+  const config = { ...defaults, ...options };
+  
+  cy.get('input[name="name"]').clear().type(config.name);
+  cy.contains(config.size).click();
+  cy.contains(config.dough).click();
+  
+  for (let i = 0; i < config.toppingsCount; i++) {
+    cy.get('input[type="checkbox"]').eq(i).check({ force: true });
+  }
+});
+
+Cypress.Commands.add('assertFormValidation', (errors = []) => {
+  errors.forEach(errorMessage => {
+    cy.contains(errorMessage).should('be.visible');
+  });
+});

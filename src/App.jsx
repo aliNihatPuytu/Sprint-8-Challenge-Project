@@ -1,3 +1,4 @@
+// App.jsx
 import { useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
@@ -16,48 +17,44 @@ function App() {
   const navigateTo = (page, product = null) => {
     setCurrentPage(page);
     if (product) setSelectedProduct(product);
-    window.scrollTo(0, 0);
   };
 
   const handleOrderSubmit = (data) => {
     setOrderData(data);
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <Home navigateTo={navigateTo} />;
-      case "order":
-        return (
+  return (
+    <div className="min-h-screen flex flex-col">
+      {currentPage !== "home" && currentPage !== "success" && (
+        <Header navigateTo={navigateTo} />
+      )}
+
+      <main className="flex-1">
+        {currentPage === "home" && <Home navigateTo={navigateTo} />}
+
+        {currentPage === "order" && (
           <OrderForm
             navigateTo={navigateTo}
             onSubmit={handleOrderSubmit}
             setIsLoading={setIsLoading}
             selectedProduct={selectedProduct}
           />
-        );
-      case "success":
-        return <Success navigateTo={navigateTo} orderData={orderData} />;
-      default:
-        return <Home navigateTo={navigateTo} />;
-    }
-  };
+        )}
 
-  return (
-    <div className="app">
-      {currentPage === "order" && <Header navigateTo={navigateTo} />}
-      <main className="main-content">{renderPage()}</main>
-      {currentPage === "home" && <Footer />}
+        {currentPage === "success" && (
+          <Success navigateTo={navigateTo} orderData={orderData} />
+        )}
+      </main>
+
+      {currentPage !== "success" && <Footer />}
 
       {isLoading && (
         <LoadingSpinner
-          duration={5000}
-          successHold={2000}
-          loadingText="Siparişiniz gönderiliyor..."
-          successText="Gönderildi!"
+          duration={1000}
+          successHold={1000}
           onDone={() => {
             setIsLoading(false);
-            setCurrentPage("success");
+            navigateTo("success");
           }}
         />
       )}
