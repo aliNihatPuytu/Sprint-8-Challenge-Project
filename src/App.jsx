@@ -8,6 +8,12 @@ import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
+
   const getPageFromHash = () => {
     const h = window.location.hash.replace(/^#\/?/, "");
     return ["home", "order", "success"].includes(h) ? h : "home";
@@ -30,6 +36,14 @@ function App() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+    const main = document.getElementById("main");
+    main?.focus();
+  }, [currentPage]);
+
   const handleOrderSubmit = (data) => setOrderData(data);
 
   return (
@@ -38,7 +52,7 @@ function App() {
         <Header navigateTo={navigateTo} />
       )}
 
-      <main className="flex-1">
+      <main className="flex-1" id="main" tabIndex="-1">
         {currentPage === "home" && <Home navigateTo={navigateTo} />}
 
         {currentPage === "order" && (

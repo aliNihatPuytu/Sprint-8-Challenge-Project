@@ -92,21 +92,21 @@ const Home = ({ navigateTo }) => {
   );
 
   const navItems = [
-    { id: "kore", label: "YENİ! Kore", icon: "/images/icons/1.svg" },
-    { id: "pizza", label: "Pizza", icon: "/images/icons/2.svg" },
-    { id: "burger", label: "Burger", icon: "/images/icons/3.svg" },
-    { id: "fries", label: "Kızartmalar", icon: "/images/icons/4.svg" },
-    { id: "fast", label: "Fast food", icon: "/images/icons/5.svg" },
-    { id: "soda", label: "Gazlı içecek", icon: "/images/icons/6.svg" },
+    { id: "kore", label: "YENİ! Kore", icon: "public/images/iteration-2-images/icons/1.svg" },
+    { id: "pizza", label: "Pizza", icon: "public/images/iteration-2-images/icons/2.svg" },
+    { id: "burger", label: "Burger", icon: "public/images/iteration-2-images/icons/3.svg" },
+    { id: "fries", label: "Kızartmalar", icon: "public/images/iteration-2-images/icons/4.svg" },
+    { id: "fast", label: "Fast food", icon: "public/images/iteration-2-images/icons/5.svg" },
+    { id: "soda", label: "Gazlı içecek", icon: "public/images/iteration-2-images/icons/6.svg" },
   ];
 
   const tabs = [
-    { id: "ramen", label: "Ramen", icon: "/images/icons/1.svg", active: false },
-    { id: "pizza", label: "Pizza", icon: "/images/icons/2.svg", active: true },
-    { id: "burger", label: "Burger", icon: "/images/icons/3.svg", active: false },
-    { id: "fries", label: "French fries", icon: "/images/icons/4.svg", active: false },
-    { id: "fast", label: "Fast food", icon: "/images/icons/5.svg", active: false },
-    { id: "soft", label: "Soft drinks", icon: "/images/icons/6.svg", active: false },
+    { id: "ramen", label: "Ramen", icon: "public/images/iteration-2-images/icons/1.svg", active: false },
+    { id: "pizza", label: "Pizza", icon: "public/images/iteration-2-images/icons/2.svg", active: true },
+    { id: "burger", label: "Burger", icon: "public/images/iteration-2-images/icons/3.svg", active: false },
+    { id: "fries", label: "French fries", icon: "public/images/iteration-2-images/icons/4.svg", active: false },
+    { id: "fast", label: "Fast food", icon: "public/images/iteration-2-images/icons/5.svg", active: false },
+    { id: "soft", label: "Soft drinks", icon: "/public/images/iteration-2-images/icons/6.svg", active: false },
   ];
 
   return (
