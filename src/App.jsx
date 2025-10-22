@@ -28,6 +28,10 @@ function App() {
     setCurrentPage(page);
     if (product) setSelectedProduct(product);
     window.location.hash = `/${page}`;
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
   };
 
   useEffect(() => {
@@ -37,11 +41,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    const id = requestAnimationFrame(() => {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
-    const main = document.getElementById("main");
-    main?.focus();
+      document.getElementById("main")?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
   }, [currentPage]);
 
   const handleOrderSubmit = (data) => setOrderData(data);
