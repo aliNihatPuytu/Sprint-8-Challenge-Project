@@ -1,4 +1,4 @@
-import React, { useId, useMemo } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import "./Home.css";
 
 const ENTER_KEYS = ["Enter", " "];
@@ -14,6 +14,52 @@ function asButtonHandlers(action) {
     },
   };
 }
+
+const Icon = ({ name, alt = "", ...rest }) => {
+  const bases = ["/images/icons", "/images/iteration-2-images/icons"];
+  const [i, setI] = useState(0);
+  const src = `${bases[i]}/${name}.svg`;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      onError={() => {
+        if (i < bases.length - 1) setI(i + 1);
+      }}
+      {...rest}
+    />
+  );
+};
+
+const ProductImg = ({ file, alt, className }) => {
+  const bases = ["/images/pictures", "/images/iteration-2-images/pictures"];
+  const [i, setI] = useState(0);
+  const [src, setSrc] = useState(`${bases[0]}/${file}`);
+
+  useEffect(() => {
+    setI(0);
+    setSrc(`${bases[0]}/${file}`);
+  }, [file]);
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+      onError={() => {
+        if (i < bases.length - 1) {
+          const ni = i + 1;
+          setI(ni);
+          setSrc(`${bases[ni]}/${file}`);
+        }
+      }}
+    />
+  );
+};
 
 const PromoCard = ({ className, bgClass, title, subtitle, buttonLabel = "SİPARİŞ VER", onActivate, ariaLabel }) => {
   return (
@@ -52,13 +98,7 @@ const ProductCard = ({ product, onActivate }) => {
       aria-label={`Siparişe git: ${product.name}`}
       {...asButtonHandlers(onActivate)}
     >
-      <img
-        loading="lazy"
-        decoding="async"
-        src={product.image}
-        alt={product.name}
-        className="product-image"
-      />
+      <ProductImg file={product.image} alt={product.name} className="product-image" />
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
         <div className="product-rating">
@@ -73,11 +113,12 @@ const ProductCard = ({ product, onActivate }) => {
 
 const Home = ({ navigateTo }) => {
   const heroLabelId = useId();
+
   const products = useMemo(
     () => [
-      { id: 1, name: "Terminal Pizza", price: 60, rating: 4.9, ratingCount: 200, image: "/images/iteration-2-images/pictures/food-1.png" },
-      { id: 2, name: "Position Absolute Acı Pizza", price: 85.5, rating: 4.9, ratingCount: 928, image: "/images/iteration-2-images/pictures/food-2.png" },
-      { id: 3, name: "useEffect Tavuklu Burger", price: 75, rating: 4.9, ratingCount: 462, image: "/images/iteration-2-images/pictures/food-3.png" },
+      { id: 1, name: "Terminal Pizza",                 price: 60,   rating: 4.9, ratingCount: 200, image: "food-1.png" },
+      { id: 2, name: "Position Absolute Acı Pizza",    price: 85.5, rating: 4.9, ratingCount: 928, image: "food-2.png" },
+      { id: 3, name: "useEffect Tavuklu Burger",       price: 75,   rating: 4.9, ratingCount: 462, image: "food-3.png" },
     ],
     []
   );
@@ -85,28 +126,28 @@ const Home = ({ navigateTo }) => {
   const specialProducts = useMemo(
     () => [
       { id: 4, name: "Position Absolute Acı Burger", type: "Özel Lezzetus" },
-      { id: 5, name: "Hackathlon Burger Menü", type: "Burger Menü" },
-      { id: 6, name: "Çooook hızlı npm gibi kurye", type: "Hızlı Kurye" },
+      { id: 5, name: "Hackathlon Burger Menü",       type: "Burger Menü" },
+      { id: 6, name: "Çooook hızlı npm gibi kurye",  type: "Hızlı Kurye" },
     ],
     []
   );
 
   const navItems = [
-    { id: "kore", label: "YENİ! Kore", icon: "public/images/iteration-2-images/icons/1.svg" },
-    { id: "pizza", label: "Pizza", icon: "public/images/iteration-2-images/icons/2.svg" },
-    { id: "burger", label: "Burger", icon: "public/images/iteration-2-images/icons/3.svg" },
-    { id: "fries", label: "Kızartmalar", icon: "public/images/iteration-2-images/icons/4.svg" },
-    { id: "fast", label: "Fast food", icon: "public/images/iteration-2-images/icons/5.svg" },
-    { id: "soda", label: "Gazlı içecek", icon: "public/images/iteration-2-images/icons/6.svg" },
+    { id: "kore",  label: "YENİ! Kore",     iconName: "1" },
+    { id: "pizza", label: "Pizza",          iconName: "2" },
+    { id: "burger",label: "Burger",         iconName: "3" },
+    { id: "fries", label: "French fries",   iconName: "4" },
+    { id: "fast",  label: "Fast food",      iconName: "5" },
+    { id: "soda",  label: "Soft drinks",    iconName: "6" },
   ];
 
   const tabs = [
-    { id: "ramen", label: "Ramen", icon: "public/images/iteration-2-images/icons/1.svg", active: false },
-    { id: "pizza", label: "Pizza", icon: "public/images/iteration-2-images/icons/2.svg", active: true },
-    { id: "burger", label: "Burger", icon: "public/images/iteration-2-images/icons/3.svg", active: false },
-    { id: "fries", label: "French fries", icon: "public/images/iteration-2-images/icons/4.svg", active: false },
-    { id: "fast", label: "Fast food", icon: "public/images/iteration-2-images/icons/5.svg", active: false },
-    { id: "soft", label: "Soft drinks", icon: "/public/images/iteration-2-images/icons/6.svg", active: false },
+    { id: "ramen",  label: "Ramen",        iconName: "1", active: false },
+    { id: "pizza",  label: "Pizza",        iconName: "2", active: true  },
+    { id: "burger", label: "Burger",       iconName: "3", active: false },
+    { id: "fries",  label: "French fries", iconName: "4", active: false },
+    { id: "fast",   label: "Fast food",    iconName: "5", active: false },
+    { id: "soft",   label: "Soft drinks",  iconName: "6", active: false },
   ];
 
   return (
@@ -143,7 +184,7 @@ const Home = ({ navigateTo }) => {
             className="nav-item"
             onClick={(e) => e.preventDefault()}
           >
-            <img src={it.icon} alt="" aria-hidden="true" />
+            <Icon name={it.iconName} alt="" aria-hidden="true" />
             <span>{it.label}</span>
           </a>
         ))}
@@ -202,7 +243,7 @@ const Home = ({ navigateTo }) => {
               aria-current={t.active ? "page" : undefined}
               onClick={(e) => e.preventDefault()}
             >
-              <img src={t.icon} alt="" aria-hidden="true" />
+              <Icon name={t.iconName} alt="" aria-hidden="true" />
               <span>{t.label}</span>
             </a>
           ))}
