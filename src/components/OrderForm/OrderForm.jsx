@@ -125,7 +125,7 @@ const OrderForm = ({ navigateTo, onSubmit, setIsLoading, selectedProduct }) => {
       <div className="hero">
         <div className="form-banner">
           <img
-            src="images/iteration-2-images/pictures/form-banner.png"
+            src="/images/iteration-2-images/pictures/form-banner.png" 
             alt="Position Absolute Acı Pizza"
             className="banner-image"
           />
@@ -326,35 +326,36 @@ const OrderForm = ({ navigateTo, onSubmit, setIsLoading, selectedProduct }) => {
                 SİPARİŞ VER
               </button>
             </aside>
-            <div className="quantity-selector-container">
-  <div className="quantity-selector" aria-label="Adet seçici (mobil)">
-    <button
-      type="button"
-      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-      disabled={quantity <= 1}
-      aria-label="Adeti azalt"
-    >
-      -
-    </button>
-    <span aria-live="polite">{quantity}</span>
-    <button
-      type="button"
-      onClick={() => setQuantity((q) => q + 1)}
-      aria-label="Adeti artır"
-    >
-      +
-    </button>
-  </div>
 
-  <button
-    type="submit"
-    className="submit-button-mobile"
-    disabled={loading}
-    aria-disabled={loading ? "true" : "false"}
-  >
-    SİPARİŞ VER
-  </button>
-</div>
+            <div className="quantity-selector-container">
+              <div className="quantity-selector" aria-label="Adet seçici (mobil)">
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  disabled={quantity <= 1}
+                  aria-label="Adeti azalt"
+                >
+                  -
+                </button>
+                <span aria-live="polite">{quantity}</span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => q + 1)}
+                  aria-label="Adeti artır"
+                >
+                  +
+                </button>
+              </div>
+
+              <button
+                type="submit"
+                className="submit-button-mobile"
+                disabled={loading}
+                aria-disabled={loading ? "true" : "false"}
+              >
+                SİPARİŞ VER
+              </button>
+            </div>
           </div>
 
           {apiError && (

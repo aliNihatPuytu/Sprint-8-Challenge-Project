@@ -1,5 +1,4 @@
-// App.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import OrderForm from "./components/OrderForm/OrderForm";
@@ -9,7 +8,12 @@ import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import "./App.css";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const getPageFromHash = () => {
+    const h = window.location.hash.replace(/^#\/?/, "");
+    return ["home", "order", "success"].includes(h) ? h : "home";
+  };
+
+  const [currentPage, setCurrentPage] = useState(getPageFromHash());
   const [orderData, setOrderData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,11 +21,16 @@ function App() {
   const navigateTo = (page, product = null) => {
     setCurrentPage(page);
     if (product) setSelectedProduct(product);
+    window.location.hash = `/${page}`;
   };
 
-  const handleOrderSubmit = (data) => {
-    setOrderData(data);
-  };
+  useEffect(() => {
+    const onHashChange = () => setCurrentPage(getPageFromHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const handleOrderSubmit = (data) => setOrderData(data);
 
   return (
     <div className="min-h-screen flex flex-col">
